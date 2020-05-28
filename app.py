@@ -28,6 +28,12 @@ class Item(db.Model):
     end_date=db.Column(db.String(100))
     gtin=db.Column(db.Integer)
     vendor_id=db.Column(db.Integer)
+    action_required=db.Column(db.String(100))
+    action_taken=db.Column(db.String(100))
+    assigned_to=db.Column(db.String(100))
+    reviewer=db.Column(db.String(100))
+    project_manager=db.Column(db.String(100))
+    project_lead=db.Column(db.String(100))
 
     def __init__(self, ref_id, project_name, task, channel, ticket, priority, start_date, end_date, gtin, vendor_id):
         self.ref_id = ref_id
@@ -92,7 +98,7 @@ def workInd():
                 b = 'IS'
             elif task == 'Miscellaneous':
                 b = 'M'
-        #check for new or repeat
+        #set new or repeat
         c = 'N'
         if found_vendor and found_gtin:
             c = 'R'
@@ -115,7 +121,7 @@ def workInd():
 #Delete
 @app.route('/delete', methods = ["GET", "POST"])
 def delete_item():
-    if request.method == "POST":
+    if request.method == 'POST':
         Ref_ID = request.form.get('Ref_ID')
         found_item = Item.query.filter_by(ref_id = Ref_ID).first()
         if found_item:
@@ -127,11 +133,32 @@ def delete_item():
     return render_template("delete.html")
 
 #Work Info
-@app.route('/workInfo')
-def workInfo():   
+@app.route('/workInfo', methods = ["GET", "POST"])
+def workInfo():
+    if request.method == "POST": 
+        #get the values from form
+        Ref_ID = request.form.get('Ref_ID')
+        end_date = request.form.get('end_date')
+        action_required = request.form.get('action_required')
+        action_taken = request.form.get('action_taken')
+        assigned_to = request.form.get('assigned_to')
+        reviewer = request.form.get('reviewer')
+        project_manager = request.form.get('project_manager')
+        project_lead = request.form.get('project_lead')
+        #edit values obtained
+        found_item = Item.query.filter_by(ref_id = Ref_ID).first()
+        if found_item:
+            found_item.end_date = end_date
+            found_item.action_required = action_required
+            found_item.action_taken = action_taken
+            found_item.assigned_to = assigned_to
+            found_item.reviewer = reviewer
+            found_item.project_manager = project_manager
+            found_item.project_lead = project_lead
+            db.session.commit()
+            flash('updated item : {}'.format(Ref_ID))
+        else:
+            flash('Item Not Found')
     return render_template('workInfo.html')
-
-
-
 if __name__ == '__main__':
     app.run(debug = True)

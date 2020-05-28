@@ -1,4 +1,86 @@
 {%extends 'layout.html' %}
-
-
-{% block body %}WORK INFO{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">WORK INFO</h5>
+            <form method = "POST">
+                <div class="form-group">
+                <label for="Ref_ID">Reference ID</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="Ref_ID"
+                    name="Ref_ID"
+                    placeholder="Enter Reference ID of the item to be updated......"
+                />
+                </div>
+                <div class="form-group">
+                    <label for="Resolved Date">Resolved Date</label>
+                    <input
+                        type="date"
+                        class="form-control"
+                        id="end_date"
+                        name="end_date"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="action_required">Action Required</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="action_required"
+                        name="action_required"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="action_taken">Action Taken</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="action_taken"
+                        name="action_taken"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="assigned_to">Assigned To</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="assigned_to"
+                        name="assigned_to"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="reviewer">Reviewer</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="reviewer"
+                        name="reviewer"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="project_manager">Project Manager</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="project_manager"
+                        name="project_manager"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="project_lead">Project Lead</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="project_lead"
+                        name="project_lead"
+                    />
+                </div>
+                <input type="submit" value = "UPDATE" class="btn btn-outline-info"></input>           
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
