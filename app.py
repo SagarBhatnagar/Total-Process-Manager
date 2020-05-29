@@ -70,11 +70,10 @@ class searchForm(FlaskForm):
     priority = IntegerField('Priority')
     project_manager = StringField('Project Manager')
     Ref_ID = StringField('Reference ID')
-
-
 #Master Page
 @app.route('/', methods = ['GET', 'POST'])
 def home():
+    #Fetching Search Parameters
     if request.method == 'POST':
         project_name = request.form.get('project_name')
         ticket = request.form.get('ticket')
@@ -84,8 +83,9 @@ def home():
         priority = request.form.get('priority')
         project_manager = request.form.get('project_manager')
         reviewer = request.form.get('reviewer')
-        Ref_ID = request.form.get('Ref_ID')
+        ref_id = request.form.get('Ref_ID')
         query = Item.query
+        #Search Filter
         if project_name:
             query = query.filter(Item.project_name == project_name)
         if ticket:
@@ -102,13 +102,12 @@ def home():
             query = query.filter(Item.project_manager == project_manager)
         if reviewer:
             query = query.filter(Item.reviewer == reviewer)
-        if Ref_ID:
-            query = query.filter(Item.ref_id == Ref_ID)
+        if ref_id:
+            query = query.filter(Item.ref_id == ref_id)
+        #Generated Result
         result = query.all()
-        a=''
-        for item in result:
-            a = a + item.project_manager
-        return a
+        #Show Results Page
+        return render_template('search_results.html', item=result)
     return render_template('home.html')
 
 #Work Induction
