@@ -1,6 +1,8 @@
 from flask import Flask, render_template, url_for, redirect, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from flask_wtf import FlaskForm
+from wtforms import Form, StringField, IntegerField, DateField, SubmitField, SelectField, validators
 import os
 
 #App
@@ -58,9 +60,55 @@ items_schema = ItemSchema(many=True)
 
 
 app.secret_key = "super secret key"
+
+#Search Form
+class searchForm(FlaskForm):
+    project_name = StringField('Project Name')
+    ticket = StringField('Ticket')
+    start_date = DateField('Start Date')
+    end_date = DateField('End Date')
+    priority = IntegerField('Priority')
+    project_manager = StringField('Project Manager')
+    Ref_ID = StringField('Reference ID')
+
+
 #Master Page
-@app.route('/')
+@app.route('/', methods = ['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        project_name = request.form.get('project_name')
+        ticket = request.form.get('ticket')
+        gtin = request.form.get('gtin')
+        start_date = request.form.get('start_date')
+        end_date = request.form.get('end_date')
+        priority = request.form.get('priority')
+        project_manager = request.form.get('project_manager')
+        reviewer = request.form.get('reviewer')
+        Ref_ID = request.form.get('Ref_ID')
+        query = Item.query
+        if project_name:
+            query = query.filter(Item.project_name == project_name)
+        if ticket:
+            query = query.filter(Item.ticket == ticket)
+        if gtin:
+            query = query.filter(Item.gtin == gtin)
+        if start_date:
+            query = query.filter(Item.start_date == start_date)
+        if end_date:
+            query = query.filter(Item.end_date == end_date)
+        if priority:
+            query = query.filter(Item.priority == priority)
+        if project_manager:
+            query = query.filter(Item.project_manager == project_manager)
+        if reviewer:
+            query = query.filter(Item.reviewer == reviewer)
+        if Ref_ID:
+            query = query.filter(Item.ref_id == Ref_ID)
+        result = query.all()
+        a=''
+        for item in result:
+            a = a + item.project_manager
+        return a
     return render_template('home.html')
 
 #Work Induction
@@ -160,5 +208,6 @@ def workInfo():
         else:
             flash('Item Not Found')
     return render_template('workInfo.html')
+
 if __name__ == '__main__':
     app.run(debug = True)
