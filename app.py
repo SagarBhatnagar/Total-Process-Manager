@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, redirect, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_wtf import FlaskForm
+from flask_table import Table, Col
 from wtforms import Form, StringField, IntegerField, DateField, SubmitField, SelectField, validators
 import os
 
@@ -61,6 +62,19 @@ items_schema = ItemSchema(many=True)
 
 app.secret_key = "super secret key"
 
+#Table
+class ItemTable(Table):
+    ref_id = Col('Unique Reference Number')
+    project_name = Col('Project Name')
+    task = Col('Task')
+    channel = Col('How we receive')
+    ticket = Col('JIRA ticket number')
+    priority = Col('Priority')
+    start_date = Col('Recieved Date')
+    end_date = Col('Resolved Date')
+    gtin = Col('GTIN')
+    vendor_id = Col('Vendor ID')
+
 #Search Form
 class searchForm(FlaskForm):
     project_name = StringField('Project Name')
@@ -106,8 +120,10 @@ def home():
             query = query.filter(Item.ref_id == ref_id)
         #Generated Result
         result = query.all()
+        table = ItemTable(result)
+        # print(table.__html__())
         #Show Results Page
-        return render_template('search_results.html', item=result)
+        return render_template('search_results.html', table=table)
     return render_template('home.html')
 
 #Work Induction

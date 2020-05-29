@@ -1,6 +1,32 @@
 {%extends 'layout.html' %}
+
+{%block head%}
+<style>
+    body 
+    {
+        background-color: #FFFFFF;
+        color: #000000;
+        font-family:Verdana;
+        font-size:16px;
+    }
+    table, th, td
+    {
+        border: 1px solid #0088ff;
+        border-collapse: collapse;
+        padding: 3px;
+        font-family:Verdana;
+        font-size:12px;
+        text-align: left;
+    }
+
+</style>
+{%endblock%}
+
 {%block body%}
-
-<h1>{{ item }}</h1>
-
+<div class="container">    
+    {{table}}
+    <br><br>
+    <a href = "./" class = "btn btn-outline-info">BACK</a>
+</div>
+  
 {%endblock%}
