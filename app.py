@@ -195,13 +195,20 @@ def workInfo():
         #edit values obtained
         found_item = Item.query.filter_by(ref_id = Ref_ID).first()
         if found_item:
-            found_item.end_date = end_date
-            found_item.action_required = action_required
-            found_item.action_taken = action_taken
-            found_item.assigned_to = assigned_to
-            found_item.reviewer = reviewer
-            found_item.project_manager = project_manager
-            found_item.project_lead = project_lead
+            if end_date:
+                found_item.end_date = end_date
+            if action_required:
+                found_item.action_required = action_required
+            if action_taken:
+                found_item.action_taken = action_taken
+            if assigned_to:
+                found_item.assigned_to = assigned_to
+            if reviewer:
+                found_item.reviewer = reviewer
+            if project_manager:
+                found_item.project_manager = project_manager
+            if project_lead:
+                found_item.project_lead = project_lead
             db.session.commit()
             flash('updated item : {}'.format(Ref_ID))
         else:
