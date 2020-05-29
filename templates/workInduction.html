@@ -2,7 +2,7 @@
 <div class="container">
   <div class="card">
     <div class="card-body">
-        <h5 class="card-title">WORK INDUCTION</h5>
+        <h3 class="card-title" style="text-align: center;">WORK INDUCTION</h3>
       <form method = "POST">
         <div class="form-group">
           <label for="project_name">Project Name</label>
@@ -14,76 +14,84 @@
             placeholder="WM Support/RCT Support/JoW"
           />
         </div>
-        <div class="form-group">
-          <label for="task">Task</label>
-          <input
-            type="text"
-            class="form-control"
-            id="task"
-            name="task"
-            placeholder="Item Maintenance/Item Setup/Miscellaneous"
-          />
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="task">Task</label>
+            <input
+              type="text"
+              class="form-control"
+              id="task"
+              name="task"
+              placeholder="Item Maintenance/Item Setup/Miscellaneous"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="Priority">Priority</label>
+            <input
+              type="text"
+              class="form-control"
+              name="priority"
+              id="priority"
+              placeholder="enter priority..."
+            />
+          </div>
         </div>
-        <div class="form-group">
-          <label for="channel">How we recieve</label>
-          <input
-            type="text"
-            class="form-control"
-            name="channel"
-            id="channel"
-            placeholder="JIRA/Proactive"
-          />
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="channel">How we recieve</label>
+            <input
+              type="text"
+              class="form-control"
+              name="channel"
+              id="channel"
+              placeholder="JIRA/Proactive"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="ticket">Jira Ticket</label>
+            <input
+              type="text"
+              class="form-control"
+              name="ticket"
+              id="ticket"
+              placeholder="enter ticket number..."
+            />
+          </div>
+        </div>       
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="start_date">Recieved Date</label>
+            <input
+              type="date"
+              class="form-control"
+              name="start_date"
+              id="start_date"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="end_date">Resolved Date(Optional)</label>
+            <input
+              type="date"
+              class="form-control"
+              name="end_date"
+              id="end_date"
+            />
+          </div>
         </div>
-        <div class="form-group">
-          <label for="ticket">Jira Ticket</label>
-          <input
-            type="text"
-            class="form-control"
-            name="ticket"
-            id="ticket"
-            placeholder="enter ticket number..."
-          />
-        </div>
-        <div class="form-group">
-          <label for="Priority">Priority</label>
-          <input
-            type="text"
-            class="form-control"
-            name="priority"
-            id="priority"
-            placeholder="enter priority..."
-          />
-        </div>
-        <div class="form-group">
-          <label for="start_date">Recieved Date</label>
-          <input
-            type="date"
-            class="form-control"
-            name="start_date"
-            id="start_date"
-          />
-        </div>
-        <div class="form-group">
-          <label for="end_date">Resolved Date(Optional)</label>
-          <input
-            type="date"
-            class="form-control"
-            name="end_date"
-            id="end_date"
-          />
-        </div>
-        <div class="form-group">
-          <label for="gtin">GTIN</label>
-          <input type="number" class="form-control" name="gtin" id="gtin" />
-        </div>
-        <div class="form-group">
-          <label for="vendor_id">Vendor ID</label>
-          <input
-            type="number"
-            class="form-control"
-            name="vendor_id"
-            id="vendor_id"
-          />
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="gtin">GTIN</label>
+            <input type="number" class="form-control" name="gtin" id="gtin" />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="vendor_id">Vendor ID</label>
+            <input
+              type="number"
+              class="form-control"
+              name="vendor_id"
+              id="vendor_id"
+            />
+          </div>
         </div>
         <input type="submit" value = "Submit" class="btn btn-outline-success"></input>
         <a href="/delete" class = "btn btn-outline-danger">Delete</a>

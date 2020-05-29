@@ -1,4 +1,106 @@
 {%extends 'layout.html' %}
 
 
-{%block body%}HOME{%endblock%}
+{%block body%}
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title" style="text-align: center;">SEARCH</h3>
+            <form method = "POST">
+                <div class="form-group">
+                <label for="project_name">Project</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="project_name"
+                    name="project_name"
+                    placeholder="Project Name"
+                />
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="ticket">JIRA Ticket Number</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="ticket"
+                            name="ticket"
+                        />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="gtin">GTIN</label>
+                        <input
+                            type="number"
+                            class="form-control"
+                            id="gtin"
+                            name="gtin"
+                        />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="start_date">Start Date</label>
+                        <input
+                            type="date"
+                            class="form-control"
+                            id="start_date"
+                            name="start_date"
+                        />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="end_date">End Date</label>
+                        <input
+                            type="date"
+                            class="form-control"
+                            id="end_date"
+                            name="end_date"
+                        />
+                    </div>
+                
+                    <div class="form-group col-md-4">
+                        <label for="Priority">Priority</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="priority"
+                            name="priority"
+                        />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="project_manager">Project Manager</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="project_manager"
+                            name="project_manager"
+                        />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="reviewer">Reviewer</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="reviewer"
+                            name="reviewer"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Ref_ID">Reference Number</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="Ref_ID"
+                        name="Ref_ID"
+                    />
+                </div>
+                <input type="submit" value = "RESULTS" class="btn btn-outline-primary"></input>           
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}

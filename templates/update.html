@@ -1,9 +1,11 @@
-{% extends 'layout.html' %}
+{%extends 'layout.html' %}
+
+
 {%block body%}
 <div class="container">
-    <div class="card border-danger">
+    <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Delete Item</h5>
+            <h5 class="card-title">UPDATE ITEM</h5>
             <form method = "POST">
                 <div class="form-group">
                 <label for="Ref_ID">Reference ID</label>
@@ -12,13 +14,18 @@
                     class="form-control"
                     id="Ref_ID"
                     name="Ref_ID"
-                    placeholder="Enter Reference ID of the item to be deleted......"
+                    placeholder="Enter Reference ID of the item to be updated......"
                 />
                 </div>
-                <input type="submit" value = "Delete" class="btn btn-outline-warning"></input>            
-                <a href="/workInd" class = "btn btn-outline-secondary">Back</a>
+                <input type="submit" value = "UPDATE" class="btn btn-outline-info"></input>           
             </form>
         </div>
     </div>
 </div>
+{% endblock %}
+
+
+
+
+
 {%endblock%}
