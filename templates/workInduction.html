@@ -5,25 +5,23 @@
         <h3 class="card-title" style="text-align: center;">WORK INDUCTION</h3>
       <form method = "POST">
         <div class="form-group">
-          <label for="project_name">Project Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="project_name"
-            name="project_name"
-            placeholder="WM Support/RCT Support/JoW"
-          />
+          <label for="project_name">Project</label>
+          <select class="form-control" id="project_name" name = "project_name">
+              <option></option>
+              <option>WM Support</option>
+              <option>RCT Support</option>
+              <option>JoW</option>
+          </select>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="task">Task</label>
-            <input
-              type="text"
-              class="form-control"
-              id="task"
-              name="task"
-              placeholder="Item Maintenance/Item Setup/Miscellaneous"
-            />
+            <select class="form-control" id="task" name = "task">
+                <option></option>
+                <option>Item Setup</option>
+                <option>Item Maintenance</option>
+                <option>Miscellaneous</option>
+            </select>
           </div>
           <div class="form-group col-md-6">
             <label for="Priority">Priority</label>
