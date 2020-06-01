@@ -1,6 +1,5 @@
 document.getElementById('gtin').addEventListener('blur', validateGTIN);
 
-
 function validateGTIN(){
     const gtin = document.getElementById('gtin');
     const re = /^\d{14}$/;

@@ -121,7 +121,7 @@ def home():
         #Generated Result
         result = query.all()
         table = ItemTable(result)
-        # print(table.__html__())
+            # print(table.__html__())
         #Show Results Page
         return render_template('search_results.html', table=table)
     return render_template('home.html')
