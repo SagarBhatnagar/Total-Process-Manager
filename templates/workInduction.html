@@ -6,7 +6,7 @@
       <form method = "POST">
         <div class="form-group">
           <label for="project_name">Project</label>
-          <select class="form-control" id="project_name" name = "project_name">
+          <select class="form-control" id="project_name" name = "project_name" required>
               <option></option>
               <option>WM Support</option>
               <option>RCT Support</option>
@@ -16,7 +16,7 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="task">Task</label>
-            <select class="form-control" id="task" name = "task">
+            <select class="form-control" id="task" name = "task" required>
                 <option></option>
                 <option>Item Setup</option>
                 <option>Item Maintenance</option>
@@ -79,7 +79,7 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="gtin">GTIN</label>
-            <input type="number" class="form-control" name="gtin" id="gtin"/>
+            <input type="number" class="form-control" name="gtin" id="gtin" required/>
             <div id = "vgtin" class="invalid-feedback">
               GTIN must be a 14 digit number.
             </div>
