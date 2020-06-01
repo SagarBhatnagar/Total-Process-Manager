@@ -12,6 +12,8 @@ function validatePM(){
     }
     else{
         project_manager.classList.remove('is-invalid');
+        project_manager.classList.add('is-valid');
+
     }
 }
 
@@ -25,6 +27,8 @@ function validatePL(){
     }
     else{
         project_lead.classList.remove('is-invalid');
+        project_lead.classList.add('is-valid');
+
     }
 }
 
@@ -37,6 +41,8 @@ function validateR(){
     }
     else{
         reviewer.classList.remove('is-invalid');
+        reviewer.classList.add('is-valid');
+
     }
 }
 
@@ -49,5 +55,7 @@ function validateAT(){
     }
     else{
         assigned_to.classList.remove('is-invalid');
+        assigned_to.classList.add('is-valid');
+
     }
 }

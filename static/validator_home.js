@@ -8,9 +8,12 @@ function validateGTIN(){
 
     if(!re.test(gtin.value)){
         gtin.classList.add('is-invalid');
+        document.getElementById('vgtin').style.display = 'block'
     }
     else{
         gtin.classList.remove('is-invalid');
+        gtin.classList.add('is-valid');
+        document.getElementById('vgtin').style.display = 'none'
     }
 }
 
@@ -23,6 +26,8 @@ function validatePM(){
     }
     else{
         project_manager.classList.remove('is-invalid');
+        project_manager.classList.add('is-valid');
+
     }
 }
 
@@ -35,5 +40,6 @@ function validateR(){
     }
     else{
         reviewer.classList.remove('is-invalid');
+        reviewer.classList.add('is-valid');        
     }
 }

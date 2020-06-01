@@ -79,7 +79,10 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="gtin">GTIN</label>
-            <input type="number" class="form-control" name="gtin" id="gtin" placeholder="Enter 14 digit GTIN"/>
+            <input type="number" class="form-control" name="gtin" id="gtin"/>
+            <div id = "vgtin" class="invalid-feedback">
+              GTIN must be a 14 digit number.
+            </div>
           </div>
           <div class="form-group col-md-6">
             <label for="vendor_id">Vendor ID</label>
