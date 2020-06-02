@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_wtf import FlaskForm
 from flask_table import Table, Col
-from wtforms import Form, StringField, IntegerField, DateField, SubmitField, SelectField, validators
 import os
 
 #App
@@ -75,15 +74,6 @@ class ItemTable(Table):
     gtin = Col('GTIN')
     vendor_id = Col('Vendor ID')
 
-#Search Form
-class searchForm(FlaskForm):
-    project_name = StringField('Project Name')
-    ticket = StringField('Ticket')
-    start_date = DateField('Start Date')
-    end_date = DateField('End Date')
-    priority = IntegerField('Priority')
-    project_manager = StringField('Project Manager')
-    Ref_ID = StringField('Reference ID')
 #Master Page
 @app.route('/', methods = ['GET', 'POST'])
 def home():
