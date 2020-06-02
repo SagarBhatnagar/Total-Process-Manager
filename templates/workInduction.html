@@ -3,7 +3,7 @@
   <div class="card">
     <div class="card-body">
         <h3 class="card-title" style="text-align: center;">WORK INDUCTION</h3>
-      <form method = "POST">
+      <form method = "POST" class = "needs-validation" novalidate>
         <div class="form-group">
           <label for="project_name">Project</label>
           <select class="form-control" id="project_name" name = "project_name" required>
@@ -100,6 +100,23 @@
     </div>
   </div>
 </div>
+<script>
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {      
+      var forms = document.getElementsByClassName('needs-validation');      
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+  </script>
 <script src = "static/validator_ind.js"></script>
 
 {% endblock %}
