@@ -30,8 +30,8 @@ class Item(db.Model):
     end_date=db.Column(db.String(100))
     gtin=db.Column(db.Integer)
     vendor_id=db.Column(db.Integer)
-    action_required=db.Column(db.String(100))
-    action_taken=db.Column(db.String(100))
+    action_required=db.Column(db.Text)
+    action_taken=db.Column(db.Text)
     assigned_to=db.Column(db.String(100))
     reviewer=db.Column(db.String(100))
     project_manager=db.Column(db.String(100))
@@ -242,7 +242,19 @@ def status():
     item = Item.query.filter_by(ref_id = Ref_ID)
     item = item[0]
     List = [item.gtin, item.assigned_to, item.reviewer]
-
+    if request.method == 'POST':
+        status = request.form.get('status')
+        action_required = request.form.get('action_required')
+        if item.status:
+            item.status = item.status+', '+status
+        else:
+            item.status = status
+        if action_required:
+            item.action_required = item.action_required+','+action_required
+        else:
+            item.action_required = action_required
+        db.session.commit()
+        flash('done')
 
     return render_template('status.html', List = List)
 
