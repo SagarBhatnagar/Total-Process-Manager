@@ -36,7 +36,8 @@ class Item(db.Model):
     reviewer=db.Column(db.String(100))
     project_manager=db.Column(db.String(100))
     project_lead=db.Column(db.String(100))
-    
+    status=db.Column(db.Text)
+    review=db.Column(db.Text)
 
 
     def __init__(self, ref_id, project_name, task, channel, ticket, priority, start_date, end_date, gtin, vendor_id):
