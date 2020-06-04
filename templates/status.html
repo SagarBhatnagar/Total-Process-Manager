@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+{%block body%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+            <h5 class="card-title" style="text-align: center;">Update Status</h5>
+            <form method = "POST">
+                <div class="form-group">
+                    <label for="gtin">GTIN</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="gtin"
+                        name="gtin"
+                        disabled
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="owner">Owner</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="owner"
+                        name="owner"
+                        disabled
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="gtin_stat">Status</label>
+                    <select class="form-control" id="gtin_stat" name = "gtin_stat" required>
+                        <option></option>
+                        <option>Success</option>
+                        <option>Erred</option>
+                        <option>On Hold</option>
+                        <option>WIP</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="action">Action Required</label>
+                    <select class="form-control" id="action" name = "action" required>
+                        <option></option>
+                        <option>Complete</option>
+                        <option>Need Info</option>
+                        <option>Unresolved</option>
+                        <option>WIP</option>
+                        <option>Rework</option>
+                    </select>
+                </div>
+                <input type="submit" value = "Set/Update Status" class="btn btn-outline-success"></input>
+            </form>                        
+            </div>
+        </div>
+        </div>
+        <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script>
+    var gtin = document.getElementById('gtin');
+    var owner = document.getElementById('owner')
+    var list = {{List|tojson}}
+    gtin.value = list[0]
+    owner.value = list[1]   
+    
+</script>
+
+{%endblock%}

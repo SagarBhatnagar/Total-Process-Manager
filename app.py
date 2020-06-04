@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, request, flash
+from flask import Flask, render_template, url_for, redirect, request, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_wtf import FlaskForm
@@ -36,6 +36,8 @@ class Item(db.Model):
     reviewer=db.Column(db.String(100))
     project_manager=db.Column(db.String(100))
     project_lead=db.Column(db.String(100))
+    
+
 
     def __init__(self, ref_id, project_name, task, channel, ticket, priority, start_date, end_date, gtin, vendor_id):
         self.ref_id = ref_id
@@ -220,6 +222,28 @@ def workInfo():
         else:
             flash('Item Not Found')
     return render_template('workInfo.html')
+
+@app.route('/qms', methods = ["GET", "POST"])
+def qms():
+    if request.method == 'POST':
+        Ref_ID = request.form.get('Ref_ID')
+        found_item = Item.query.filter_by(ref_id = Ref_ID).first()
+        if found_item:
+            return redirect(url_for('status', Ref_ID = Ref_ID))
+            flash('Found')
+        else:
+            flash('Item not found')
+    return render_template('qms.html')
+
+@app.route('/status', methods = ["GET", "POST"])
+def status():
+    Ref_ID = request.args['Ref_ID']    
+    item = Item.query.filter_by(ref_id = Ref_ID)
+    item = item[0]
+    List = [item.gtin, item.assigned_to, item.reviewer]
+
+
+    return render_template('status.html', List = List)
 
 if __name__ == '__main__':
     app.run(debug = True)
