@@ -1,11 +1,10 @@
 {% extends 'layout.html' %}
 {%block body%}
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
         <div class="card">
             <div class="card-body">
             <h5 class="card-title" style="text-align: center;">Update Status</h5>
+            <div class="alert alert-warning" id = "remain" role="alert" style="display: none;"></div>
             <form method = "POST">
                 <div class="form-group">
                     <label for="gtin">GTIN</label>
@@ -48,29 +47,32 @@
                         <option>Rework</option>
                     </select>
                 </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" required>
+                    <label class="form-check-label" for="exampleRadios1">
+                      Confirm Update
+                    </label>
+                </div>
+                <br>
                 <input type="submit" value = "Set/Update Status" class="btn btn-outline-success"></input>
             </form>                        
-            </div>
-        </div>
-        </div>
-        <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
         </div>
     </div>
-</div>
+</div>        
+
 <script>
     var gtin = document.getElementById('gtin');
     var owner = document.getElementById('owner')
     var list = {{List|tojson}}
     gtin.value = list[0]
-    owner.value = list[1]   
-    
+    owner.value = list[1]
+    console.log(list[2])  
+    if(list[2] == true){
+        document.getElementById("remain").style.display = 'block'
+        document.getElementById("remain").innerHTML = `Item May Have Pending Reviews`
+    }
+    else
+        document.getElementById("remain").style.display = 'none' 
 </script>
 
 {%endblock%}

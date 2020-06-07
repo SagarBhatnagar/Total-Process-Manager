@@ -228,9 +228,14 @@ def workInfo():
 def qms():
     if request.method == 'POST':
         Ref_ID = request.form.get('Ref_ID')
+        option = request.form.get('option')
         found_item = Item.query.filter_by(ref_id = Ref_ID).first()
-        if found_item:
+        
+        if found_item and option == "Update":
             return redirect(url_for('status', Ref_ID = Ref_ID))
+            flash('Found')
+        elif found_item and option == "Review":
+            return redirect(url_for("review", Ref_ID = Ref_ID))
             flash('Found')
         else:
             flash('Item not found')
@@ -241,22 +246,56 @@ def status():
     Ref_ID = request.args['Ref_ID']    
     item = Item.query.filter_by(ref_id = Ref_ID)
     item = item[0]
-    List = [item.gtin, item.assigned_to, item.reviewer]
+    
+    if item.status:
+        numStatus = len(item.status.split(","))
+    if item.review:
+        numReview = len(item.review.split(","))
+    
+    remaining = False
+    
+    if item.status and item.review:
+        if numStatus > numReview:
+            remaining = True
+    elif item.status:
+        remaining = True
+
+    List = [item.gtin, item.assigned_to, remaining]
+    
     if request.method == 'POST':
         status = request.form.get('status')
         action_required = request.form.get('action_required')
+        
         if item.status:
-            item.status = item.status+', '+status
+            item.status = item.status+','+status
         else:
             item.status = status
-        if action_required:
+        if item.action_required:
             item.action_required = item.action_required+','+action_required
         else:
             item.action_required = action_required
+                
         db.session.commit()
-        flash('done')
+        flash('Status updated to {stat} for {ref}'.format(stat = status, ref = Ref_ID))
 
     return render_template('status.html', List = List)
+@app.route('/review', methods = ["GET", "POST"])
+def review():
+    Ref_ID = request.args['Ref_ID']    
+    item = Item.query.filter_by(ref_id = Ref_ID)
+    item = item[0]
+    List = [item.review]
+    
+    if request.method == 'POST':
+        review = request.form.get('review')
+        if item.review:
+            item.review = item.review+','+review
+        else:
+            item.review = review                
+        db.session.commit()
+        flash('Review added to {review} for {ref}'.format(review = review, ref = Ref_ID))
+
+    return render_template('review.html', List = List)
 
 if __name__ == '__main__':
     app.run(debug = True)
