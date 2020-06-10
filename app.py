@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_wtf import FlaskForm
 from flask_table import Table, Col
+import datetime
 import os
 
 #App
@@ -26,8 +27,8 @@ class Item(db.Model):
     channel=db.Column(db.String(100))
     ticket=db.Column(db.String(100))
     priority=db.Column(db.String(100))
-    start_date=db.Column(db.String(100))
-    end_date=db.Column(db.String(100))
+    start_date=db.Column(db.Date)
+    end_date=db.Column(db.Date)
     gtin=db.Column(db.Integer)
     vendor_id=db.Column(db.Integer)
     action_required=db.Column(db.Text)
@@ -40,7 +41,7 @@ class Item(db.Model):
     review=db.Column(db.Text)
 
 
-    def __init__(self, ref_id, project_name, task, channel, ticket, priority, start_date, end_date, gtin, vendor_id):
+    def __init__(self, ref_id, project_name, task, channel, ticket, priority, start_date, gtin, vendor_id):
         self.ref_id = ref_id
         self.project_name = project_name
         self.task = task
@@ -48,7 +49,6 @@ class Item(db.Model):
         self.ticket = ticket
         self.priority = priority
         self.start_date = start_date
-        self.end_date = end_date
         self.gtin = gtin
         self.vendor_id = vendor_id
 
@@ -64,9 +64,9 @@ items_schema = ItemSchema(many=True)
 
 app.secret_key = "super secret key"
 
-#Table
+#Search Table
 class ItemTable(Table):
-    ref_id = Col('Unique Reference Number')
+    ref_id = Col('Reference ID')
     project_name = Col('Project Name')
     task = Col('Task')
     channel = Col('How we receive')
@@ -76,6 +76,18 @@ class ItemTable(Table):
     end_date = Col('Resolved Date')
     gtin = Col('GTIN')
     vendor_id = Col('Vendor ID')
+
+#Submission Report
+class SubReport(Table):
+    ref_id = Col('Unique Reference Number')
+    project_name = Col('Project Name')
+    task = Col('Task')
+    start_date = Col('Recieved Date')
+    end_date = Col('Resolved Date')
+    reviewer = Col('Reviewer')
+    status = Col('Status Updates')
+    action_required = Col('Action Required')
+    review = Col('Reviews')
 
 #Master Page
 @app.route('/', methods = ['GET', 'POST'])
@@ -99,10 +111,9 @@ def home():
             query = query.filter(Item.ticket == ticket)
         if gtin:
             query = query.filter(Item.gtin == gtin)
-        if start_date:
-            query = query.filter(Item.start_date == start_date)
-        if end_date:
-            query = query.filter(Item.end_date == end_date)
+        if start_date and end_date:
+            query = query.filter(Item.start_date >= start_date)
+            query = query.filter(Item.end_date <= end_date)
         if priority:
             query = query.filter(Item.priority == priority)
         if project_manager:
@@ -162,8 +173,10 @@ def workInd():
             c = 'N'
 
         ref_id = a
+        
+        start_date = datetime.datetime.fromisoformat(start_date).date()
         #create the item in database
-        item = Item(ref_id, project_name, task, channel, ticket, priority, start_date, end_date, gtin, vendor_id)
+        item = Item(ref_id, project_name, task, channel, ticket, priority, start_date, gtin, vendor_id)
         db.session.add(item)
         db.session.commit()
         
@@ -203,6 +216,8 @@ def workInfo():
         project_lead = request.form.get('project_lead')
         #edit values obtained
         found_item = Item.query.filter_by(ref_id = Ref_ID).first()
+        if end_date:
+            end_date = datetime.datetime.fromisoformat(end_date).date()
         if found_item:
             if end_date:
                 found_item.end_date = end_date
@@ -224,6 +239,7 @@ def workInfo():
             flash('Item Not Found')
     return render_template('workInfo.html')
 
+#QMS
 @app.route('/qms', methods = ["GET", "POST"])
 def qms():
     if request.method == 'POST':
@@ -284,7 +300,7 @@ def review():
     Ref_ID = request.args['Ref_ID']    
     item = Item.query.filter_by(ref_id = Ref_ID)
     item = item[0]
-    List = [item.review]
+    List = [item.reviewer]
     
     if request.method == 'POST':
         review = request.form.get('review')
@@ -296,6 +312,29 @@ def review():
         flash('Review added to {review} for {ref}'.format(review = review, ref = Ref_ID))
 
     return render_template('review.html', List = List)
+
+#REPORT
+@app.route('/report', methods = ["GET", "POST"])
+def report():
+    if request.method == 'POST':
+        option = request.form.get('option')
+        start_date = request.form.get('start_date')
+        end_date = request.form.get('end_date')
+        owner = request.form.get('assigned_to')
+        query = Item.query
+        query = query.filter(Item.start_date >= start_date)
+        query = query.filter(Item.end_date <= end_date)
+        query = query.filter(Item.assigned_to == owner)
+        result = query.all()
+        if option == "Submission Report":        
+            table = SubReport(result)                   
+            return render_template('sub_report.html', table=table, owner = owner)
+        elif option == "Accuracy Report":
+            total_gtin = len(result)
+
+            
+    return render_template('report.html')
+
 
 if __name__ == '__main__':
     app.run(debug = True)
