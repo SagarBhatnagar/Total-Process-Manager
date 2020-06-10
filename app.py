@@ -325,10 +325,13 @@ def report():
         start_date = request.form.get('start_date')
         end_date = request.form.get('end_date')
         owner = request.form.get('assigned_to')
+        ref_id = request.form.get('Ref_ID')
         query = Item.query
         query = query.filter(Item.start_date >= start_date)
         query = query.filter(Item.end_date <= end_date)
         query = query.filter(Item.assigned_to == owner)
+        if ref_id:
+            query = query.filter(Item.ref_id == ref_id)
         result = query.all()
         if option == "Submission Report":        
             table = SubReport(result)                   
