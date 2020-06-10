@@ -1,0 +1,30 @@
+{% extends 'layout.html' %} {%block body%}
+<div class="container">
+    <h5>Owner: {{owner}}</h5>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Number of GTINs</th>
+        <th scope="col">Success Count</th>
+        <th scope="col">Erred Count</th>
+        <th scope="col">Accuracy(%)</th>
+      </tr>
+    </thead>
+    <tbody id = "getRow">
+    </tbody>
+  </table>
+</div>
+<script>
+  var list = {{List|tojson}}
+  console.log(list)
+  document.getElementById('getRow').innerHTML =
+  `<tr>
+      <th scope="row">1</th>
+      <td>${list[0]}</td>
+      <td>${list[1]}</td>
+      <td>${list[2]}</td>
+      <td>${list[3]}</td>
+    </tr>`
+</script>
+{%endblock%}

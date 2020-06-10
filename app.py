@@ -87,6 +87,7 @@ class SubReport(Table):
     reviewer = Col('Reviewer')
     status = Col('Status Updates')
     action_required = Col('Action Required')
+    action_taken = Col('Action Taken')
     review = Col('Reviews')
 
 #Master Page
@@ -281,7 +282,7 @@ def status():
     if request.method == 'POST':
         status = request.form.get('status')
         action_required = request.form.get('action_required')
-        
+        action_taken = request.form.get('action_taken')
         if item.status:
             item.status = item.status+','+status
         else:
@@ -290,7 +291,10 @@ def status():
             item.action_required = item.action_required+','+action_required
         else:
             item.action_required = action_required
-                
+        if action_taken:
+            item.action_taken = action_taken+','+action_taken
+        else:
+            item.action_taken = action_taken                
         db.session.commit()
         flash('Status updated to {stat} for {ref}'.format(stat = status, ref = Ref_ID))
 
@@ -331,8 +335,24 @@ def report():
             return render_template('sub_report.html', table=table, owner = owner)
         elif option == "Accuracy Report":
             total_gtin = len(result)
-
-            
+            flag = 0
+            if total_gtin == 0:
+                flag = 1
+            success = 0
+            for item in result:
+                if item.status:
+                    numStatus = item.status.split(",")
+                if item.review:
+                    numReview = item.review.split(",")
+                if numStatus[0] == "Success" and numReview[0] == "Success":
+                    success = success + 1
+            erred = total_gtin-success
+            if not flag:
+                accuracy = round((success/total_gtin)*100, 2)
+                List = [total_gtin, success, erred, accuracy]           
+                return render_template('acc_report.html', List = List, owner = owner)           
+            else:
+                flash('NO ITEM FOUND')
     return render_template('report.html')
 
 
