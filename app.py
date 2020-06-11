@@ -84,6 +84,8 @@ class SubReport(Table):
     task = Col('Task')
     start_date = Col('Recieved Date')
     end_date = Col('Resolved Date')
+    project_manager = Col('Project Manager')    
+    project_lead = Col('Project Lead')    
     reviewer = Col('Reviewer')
     status = Col('Status Updates')
     action_required = Col('Action Required')
