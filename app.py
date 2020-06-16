@@ -327,13 +327,36 @@ def report():
         start_date = request.form.get('start_date')
         end_date = request.form.get('end_date')
         owner = request.form.get('assigned_to')
+        reviewer = request.form.get('reviewer')
+        project_lead = request.form.get('project_lead')
+        project_manager = request.form.get('project_manager')
         ref_id = request.form.get('Ref_ID')
+        project_name = request.form.get('project_name')
+        task = request.form.get('task')
+        ticket = request.form.get('ticket')
+        gtin = request.form.get('gtin')
+        
         query = Item.query
         query = query.filter(Item.start_date >= start_date)
         query = query.filter(Item.end_date <= end_date)
-        query = query.filter(Item.assigned_to == owner)
+        if owner:
+            query = query.filter(Item.assigned_to == owner)
         if ref_id:
             query = query.filter(Item.ref_id == ref_id)
+        if project_name:
+            query = query.filter(Item.project_name == project_name)
+        if task:
+            query = query.filter(Item.task == task)
+        if ticket:
+            query = query.filter(Item.ticket == ticket)
+        if gtin:
+            query = query.filter(Item.gtin == gtin)
+        if project_lead:
+            query = query.filter(Item.project_lead == project_lead)
+        if project_manager:
+            query = query.filter(Item.project_manager == project_manager)
+        if reviewer:
+            query = query.filter(Item.reviewer == reviewer)        
         result = query.all()
         if option == "Submission Report":        
             table = SubReport(result)                   

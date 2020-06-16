@@ -7,24 +7,13 @@
             <br>
             <form method="POST">
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label for="option">Report Type</label>
                         <select class="form-control" id="option" name = "option" required>
                             <option>Submission Report</option>
                             <option>Accuracy Report</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="Ref_ID">Reference ID</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="Ref_ID"
-                            name="Ref_ID"
-                        />
-                    </div>
-                </div>
-                <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="start_date">From Date</label>
                         <input
@@ -42,20 +31,104 @@
                             id="end_date"
                             name="end_date"
                         required/>
-                    </div>
+                    </div>                    
+                </div>
+                <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label for="assigned_to">*Owner</label>
+                        <label for="project_name">Project</label>
+                        <select class="form-control" id="project_name" name = "project_name">
+                            <option></option>
+                            <option>WM Support</option>
+                            <option>RCT Support</option>
+                            <option>JoW</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group col-md-4">
+                        <label for="task">Task</label>
+                        <select class="form-control" id="task" name = "task">
+                            <option></option>
+                            <option>Item Setup</option>
+                            <option>Item Maintenance</option>
+                            <option>Miscellaneous</option>
+                        </select>
+                    </div>    
+                    
+                    <div class="form-group col-md-4">
+                        <label for="Ref_ID">Reference ID</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="Ref_ID"
+                            name="Ref_ID"
+                        />
+                    </div>
+                </div>  
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="ticket">JIRA Ticket Number</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="ticket"
+                            name="ticket"
+                        />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="gtin">GTIN</label>
+                        <input
+                            type="number"
+                            class="form-control"
+                            id="gtin"
+                            name="gtin"
+                        />
+                        <div id = "vgtin" class="invalid-feedback">
+                            GTIN must be a 14 digit number.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="assigned_to">Owner</label>
                         <input
                             type="text"
                             class="form-control"
                             id="assigned_to"
                             name="assigned_to"
-                        required/>
+                        />
                     </div>
-                </div>               
+                    <div class="form-group col-md-3">
+                        <label for="project_lead">Project Lead</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="project_lead"
+                            name="project_lead"
+                        />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="project_manager">Project Manager</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="project_manager"
+                            name="project_manager"
+                        />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="reviewer">Reviewer</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="reviewer"
+                            name="reviewer"
+                        />
+                    </div>
+                </div>             
                 <input type="submit" value="Generate Report" class="btn btn-outline-primary"></input>
             </form>
         </div>
     </div>
 </div>
+<script src = "static/validator_home.js"></script>
 {%endblock%}
